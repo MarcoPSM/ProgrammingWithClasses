@@ -13,5 +13,6 @@
 
 
 ### Compile & Run
-* cmake CMakeLists.txt
+* cmake .
 * make
+* ./executable_file
