@@ -11,6 +11,7 @@
 
 #include "Point.h"
 #include "Triangle.h"
+#include "Date.h"
 
 using namespace mar;
 
@@ -18,6 +19,7 @@ void TestPoint();
 void TestWriteRead();
 void TestTriangle();
 void TestStringOperations();
+void TestDate();
 
 int main() {
     std::cout << "Programação com classes" << std::endl;
@@ -25,8 +27,40 @@ int main() {
     //TestWriteRead();
     //TestTriangle();
     //TestStringOperations();
-
+    TestDate();
     return 0;
+}
+
+void TestDate() {
+
+    mar::Date birthdate;
+    birthdate.Accept("Nasceste em que dia (ano mes dia)?", "Data invalida.");
+    const mar::Date today;
+    if (today < birthdate) {
+        std::cout << "Afinal ainda nao nasceste." << std::endl;
+    } else if (today == birthdate) {
+        std::cout << "Nasceste hoje, parabens!." << std::endl;
+    } else {
+        mar::Date day(birthdate);
+        int age = 0;
+        do {
+            day.Add(1000);
+            age++;
+        } while (day < today);
+        int daysLeft = today.DaysTo(day);
+        std::cout << "Fazes " << age * 1000 << " dias";
+        if (daysLeft == 0) {
+            std::cout << "HOJE!";
+        } else {
+            std::cout << " no dia " << day << ", ou seja,";
+            if (daysLeft == 1) {
+                std::cout << " AMANHA!";
+            } else {
+                std::cout << " daqui a " << daysLeft << " dias.";
+            }
+        }
+        std::cout << std::endl;
+    }
 }
 
 void TestStringOperations() {

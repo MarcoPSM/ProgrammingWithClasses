@@ -5,7 +5,7 @@
 #include "gtest/gtest.h"
 #include "NaiveDate.h"
 
-TEST(DateTestSuite, Friday13Version0) {
+TEST(NaiveDateTestSuite, Friday13Version0) {
     mar::NaiveDate d;
     int count = 0;
     for(;;) {
