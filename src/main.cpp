@@ -12,6 +12,7 @@
 #include "Point.h"
 #include "Triangle.h"
 #include "Date.h"
+#include "DateSpecial.h"
 
 using namespace mar;
 
@@ -20,6 +21,9 @@ void TestWriteRead();
 void TestTriangle();
 void TestStringOperations();
 void TestDate();
+void TestFriday13();
+void TestBridges();
+void TestDepartForVacations();
 
 int main() {
     std::cout << "Programação com classes" << std::endl;
@@ -27,8 +31,49 @@ int main() {
     //TestWriteRead();
     //TestTriangle();
     //TestStringOperations();
-    TestDate();
+    //TestDate();
+    //TestFriday13();
+    //TestBridges();
+    TestDepartForVacations();
+
     return 0;
+}
+
+void TestDepartForVacations() {
+    int n;
+    std::cout << "Quantos dias de férias? ";
+    std::cin >> n;
+    int y;
+    std::cout << "Em que ano? ";
+    std::cin >> y;
+    if (! mar::Date::Valid(y)) {
+        return;
+    }
+    mar::DatePortuguese::SetFormat(mar::DatePortuguese::TEXT_WITH_WEEKDAY);
+    mar::DateSpecial d = mar::DateSpecial::DepartForVacations(y, n);
+    int x = d.DaysAway(n);
+    std::cout << "Parta " << d << "." << std::endl
+        << "Regresse "<< mar::DatePortuguese(d + x) << "." << std::endl
+        << "Terá " << x << " dias de férias efectivos." << std::endl;
+}
+
+void TestBridges() {
+    mar::DateSpecial d;d.Accept("Pontes a partir de que dia(ano mes dia)?", "Data inválida.");
+    int n;
+    std::cout << "Quantas pontes: ";
+    std::cin >> n;
+    mar::DatePortuguese::SetFormat(mar::DatePortuguese::TEXT_WITH_WEEKDAY);
+    d.WriteBridges(std::cout, n);
+}
+
+void TestFriday13() {
+    int count = 0;
+    for(mar::DateSpecial d; count < 13; d++) {
+        if (d.Friday13()) {
+            count++;
+            d.WriteLine();
+        }
+    }
 }
 
 void TestDate() {
