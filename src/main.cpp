@@ -13,6 +13,7 @@
 #include "Triangle.h"
 #include "Date.h"
 #include "DateSpecial.h"
+#include "Metrics.h"
 
 using namespace mar;
 
@@ -24,6 +25,7 @@ void TestDate();
 void TestFriday13();
 void TestBridges();
 void TestDepartForVacations();
+void TestMetrics();
 
 int main() {
     std::cout << "Programação com classes" << std::endl;
@@ -34,12 +36,31 @@ int main() {
     //TestDate();
     //TestFriday13();
     //TestBridges();
-    TestDepartForVacations();
+    //TestDepartForVacations();
+    TestMetrics();
 
     return 0;
 }
 
+
+void TestMetrics() {
+    std::string fileName;
+    std::cout << "Nome do ficheiro: ";
+    std::getline(std::cin, fileName);
+    std::cout << fileName << std::endl;
+    std::ifstream input(fileName.c_str());
+    if (!input) {
+        std::cout << "Ficheiro inacessivel." << std::endl;
+        return;
+    }
+    mar::Metrics m(input);
+    std::cout << "Lines of Code = " << m.CountLinesOfCode() << std::endl;
+    std::cout << "Lines with semicolons = " << m.CountLinesEndingWithSemicolon() << std::endl;
+
+}
+
 void TestDepartForVacations() {
+
     int n;
     std::cout << "Quantos dias de férias? ";
     std::cin >> n;
