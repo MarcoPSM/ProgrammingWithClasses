@@ -34,7 +34,7 @@ mar::string_name mar::string_name::artistic() const {
 mar::string_name mar::string_name::normalized() const {
     string_name result(*this);
     for (int i = 0; i < count_particles; ++i) {
-        result.replace_all(" ", + particles[i] + " ", " ");
+        result.replace_all(" " + particles[i] + " ", " ");
     }
     return result;
 }
