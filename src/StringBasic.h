@@ -5,8 +5,8 @@
 #ifndef PROGRAMACAOCOMCLASSES_STRINGBASIC_H
 #define PROGRAMACAOCOMCLASSES_STRINGBASIC_H
 
-#import "Clonable.h"
-#import <string>
+#include "Clonable.h"
+#include <string>
 #include <iostream>
 
 namespace mar {

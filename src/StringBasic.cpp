@@ -13,6 +13,10 @@ namespace mar {
         *p = 0;
     }
 
+    StringBasic::StringBasic(const StringBasic &other) {
+
+    }
+
     StringBasic::StringBasic(const std::string &s) {
 
     }
@@ -51,6 +55,20 @@ namespace mar {
 
     }
 
+
+    Clonable *StringBasic::Clone() const {
+        return nullptr;
+    }
+
+    void StringBasic::Copy(const StringBasic &other) {
+
+    }
+
+    StringBasic &StringBasic::operator=(const StringBasic &other) {
+        return *this;
+    }
+
+
     int StringBasic::Capacity() const {
         return 0;
     }
@@ -66,6 +84,12 @@ namespace mar {
     bool StringBasic::Full() const {
         return false;
     }
+
+
+    const char *StringBasic::Image() const {
+        return nullptr;
+    }
+
 
     void StringBasic::SetDefaultCapacity(int newDefaultCapacity) {
         defaultCapacity = newDefaultCapacity;
@@ -87,6 +111,7 @@ namespace mar {
 
     }
 
+
     void StringBasic::Erase(int startPos, int endPos) {
 
     }
@@ -104,12 +129,13 @@ namespace mar {
     }
 
     const char &StringBasic::At(int x) const {
-        return "";
+        return p[x];
     }
 
     void StringBasic::PutAt(char c, int) {
 
     }
+
 
     bool StringBasic::ValidIndex(int x) const {
         return 0 <= x && x < Count();
@@ -122,6 +148,80 @@ namespace mar {
     bool StringBasic::ValidRange(int x, int y) const {
         return ValidPosition(x) && ValidPosition(y+1) && x<=y+1;
     }
+
+
+    bool StringBasic::operator==(const StringBasic &other) const {
+        return false;
+    }
+
+    bool StringBasic::operator!=(const StringBasic &other) const {
+        return false;
+    }
+
+    bool StringBasic::operator<=(const StringBasic &other) const {
+        return false;
+    }
+
+    bool StringBasic::operator<(const StringBasic &other) const {
+        return false;
+    }
+
+    bool StringBasic::operator>=(const StringBasic &other) const {
+        return false;
+    }
+
+    bool StringBasic::operator>(const StringBasic &other) const {
+        return false;
+    }
+
+
+    bool StringBasic::Equals(const StringBasic &other) const {
+        return false;
+    }
+
+    bool StringBasic::LessThan(const StringBasic &other) const {
+        return false;
+    }
+
+
+    void StringBasic::Write(std::ostream &output) const {
+
+    }
+
+    void StringBasic::WriteLine(std::ostream &output) const {
+
+    }
+
+    void StringBasic::Read(std::istream &input) {
+
+    }
+
+    void StringBasic::Read(std::istream &input, char delimiter) {
+
+    }
+
+    void StringBasic::Read(char delimiter) {
+
+    }
+
+
+    void StringBasic::GrowTo(int n) {
+
+    }
+
+    void StringBasic::Adjust() {
+
+    }
+
+
+    std::ostream &operator<<(std::ostream &output, const StringBasic &s) {
+        return output;
+    }
+
+    std::istream &operator>>(std::istream &input, const StringBasic &s) {
+        return input;
+    }
+
 
     int StringBasic::i_strlen(const char *s) {
         int i = 0;
@@ -138,5 +238,6 @@ namespace mar {
         }
         s[i] = 0;
     }
+
 
 }
