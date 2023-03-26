@@ -4,6 +4,9 @@
 
 #ifndef PROGRAMACAOCOMCLASSES_UTILITYFUNCTIONS_H
 #define PROGRAMACAOCOMCLASSES_UTILITYFUNCTIONS_H
+
+#include <iostream>
+
 namespace mar {
     // as funcoes genericas devem ser definidas logo no .h
     template <class T>
@@ -13,7 +16,7 @@ namespace mar {
     template <class T>
     T Max(const T& x, const T& y) {
         return x <= y ? y : x;
-    }    int Max(int x, int y);
+    }; //    int Max(int x, int y);
     template <class T>
     T Min(const T& x, const T& y, const T& z) {
         return Min(Min(x, y), z);
@@ -39,5 +42,7 @@ namespace mar {
     bool Sorted(T& x, T& y, T& z) {
         return x<=y && y<=z;
     }
+
+    void SkipLine(std::istream& input = std::cin, char delimiter = '\n');
 }
 #endif //PROGRAMACAOCOMCLASSES_UTILITYFUNCTIONS_H

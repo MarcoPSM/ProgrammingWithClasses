@@ -33,6 +33,10 @@ namespace mar {
         virtual Clonable* Clone() const;
         virtual void Copy(const StringBasic& other);
         virtual StringBasic& operator = (const StringBasic& other);
+        virtual void Set(const StringBasic& other);
+        virtual void Set(const StringBasic& other, int startPos, int endPos); // pre other.ValidRange(startPos, endPos);
+        virtual void SwapOut(StringBasic& other);
+        virtual void CopySwap(const StringBasic& other);
 
         virtual int Capacity() const;
         virtual int Count() const;
@@ -43,16 +47,45 @@ namespace mar {
 
         virtual void SetDefaultCapacity(int newDefaultCapacity);
         virtual void Append(const StringBasic& other);
+        virtual void Prepend(const StringBasic& other);
         virtual void Select(int startPos, int endPos); // pre ValidRange(startPos, endPos);
         virtual void Insert(const StringBasic& other, int x); // pre ValidPosition(x);
         virtual void Replace(int startPos, int endPos, const StringBasic& other); // pre ValidRange(startPos, endPos);
-
         virtual void Erase(int startPos, int endPos); // pre ValidRange(startPos, endPos);
         virtual void Clear(); // post Empty();
+        virtual void Head(int n); // pre n >= 0;
+        virtual void Tail(int n); // pre n >= 0;
+        virtual void Put(char c); // pre !Full();
+        virtual void Extend(char c);
+        virtual void Insert(char c, int x); // pre ValidPosition(x);
+        virtual void Precede(char c);
+
+        virtual void Remove(); // pre !Empty();
+        virtual void RemoveAt(int x); // pre ValidIndex(x);
+        virtual void Prune(char c);
+        virtual void PruneLast(char c);
+        virtual void PruneAll(char c);
+
         virtual int Position(const StringBasic& other) const;
         virtual int LastPosition(const StringBasic& other) const;
+        virtual int Position(const StringBasic& other, int start) const; // pre ValidPosition(start);
+        virtual int LastPosition(const StringBasic& other, int start) const; // pre start < Count();
+        virtual int Position(const char c) const;
+        virtual int LastPosition(const char c) const;
+        virtual int Position(const char c, int start) const; // pre ValidPosition(start);
+        virtual int LastPosition(const char c, int start) const; // pre start < Count();
+        virtual bool Has(char c) const;
+        virtual bool HasString(const StringBasic& other) const;
         virtual const char& At(int x) const; // pre ValidIndex(x);
-        virtual void PutAt(char c, int );    // pre ValidIndex(x);
+        virtual char& At(int x); // pre ValidIndex(x);
+        virtual void PutAt(char c, int x);    // pre ValidIndex(x);
+        virtual const char& First() const; // pre !Empt();
+        virtual const char& Last() const; // pre !Empt();
+
+        virtual void RemoveLast();
+        virtual void RemoveLast(int n); // pre n >= 0;
+        virtual void RemoveFirst();
+        virtual void RemoveFirst(int n); // pre n >= 0;
 
         virtual bool ValidIndex(int x) const;
         virtual bool ValidPosition(int x) const;
@@ -64,6 +97,17 @@ namespace mar {
         virtual bool operator <  (const StringBasic& other) const;
         virtual bool operator >= (const StringBasic& other) const;
         virtual bool operator >  (const StringBasic& other) const;
+        virtual const char& operator [] (int x) const; // pre ValidIndex(x);
+        virtual char& operator [] (int x); // pre ValidIndex(x);
+
+        virtual StringBasic& operator += (const StringBasic& other);
+        virtual StringBasic& operator += (char c);
+        virtual StringBasic operator + (const StringBasic& other) const;
+        virtual StringBasic operator + (char c) const;
+
+        virtual StringBasic& operator *= (int n); // pre n>=0;
+        virtual StringBasic operator * (int n) const; // pre n>=0;
+
 
         virtual bool Equals(const StringBasic& other) const;
         virtual bool LessThan(const StringBasic& other) const;
@@ -73,17 +117,26 @@ namespace mar {
         virtual void Read(std::istream& input = std::cin);
         virtual void Read(std::istream& input, char delimiter);
         virtual void Read(char delimiter);
+        virtual void Accept(const StringBasic& prompt);
 
         virtual void GrowTo(int n);
         virtual void Adjust(); // post Full();
 
+        virtual const char& Item() const; // pre !Empt();
+        virtual char& Item(); // pre !Empt();
+
     public: // friend
         friend std::ostream& operator << (std::ostream& output, const StringBasic& s);
-        friend std::istream& operator >> (std::istream&  input, const StringBasic& s);
+        friend std::istream& operator >> (std::istream&  input, StringBasic& s);
 
     public: // static
         static int i_strlen(const char *s);
         static void i_strcpy(char *s, const char *t);
+        static void EraseDuplicateLines(std::istream& input, std::ostream& output);
+
+    private:
+        virtual void ReadNext(std::istream& input, char delimiter);
+        virtual void Reallocate(int newCapacity); // pre newCapacity >= Count() + 1;
     };
 }
 
