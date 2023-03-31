@@ -2,8 +2,9 @@
 // Created by marco on 25-03-2023.
 //
 
-#include "StringBasic.h"
 #include <cstring>
+#include <iomanip>
+#include "StringBasic.h"
 #include "UtilityFunctions.h"
 
 namespace mar {
@@ -490,6 +491,310 @@ namespace mar {
     }
 
 
+    int StringBasic::CountIf(const StringBasic &other) const {
+        int result = 0;
+        for (int i = 0; p[i] != 0; ++i) {
+            result += other.Has(p[i]);
+        }
+        return result;
+    }
+
+    int StringBasic::CountIfNot(const StringBasic &other) const {
+        return Count() - CountIfNot(other);
+    }
+
+
+    void StringBasic::PruneIf(const StringBasic &other) {
+        int j = 0;
+        for (int i = 0; p[i] != 0; ++i) {
+            if (!other.Has(p[i])) {
+                p[j++] = p[i];
+            }
+        }
+        p[j] = 0;
+    }
+
+    void StringBasic::PruneIfNot(const StringBasic &other) {
+        int j = 0;
+        for (int i = 0; p[i] != 0; ++i) {
+            if (other.Has(p[i])) {
+                p[j++] = p[i];
+            }
+        }
+        p[j] = 0;
+    }
+
+
+    int StringBasic::PositionIf(const StringBasic &other) const {
+        return PositionIf(other, 0);
+    }
+
+    int StringBasic::PositionIfNot(const StringBasic &other) const {
+        return PositionIfNot(other, 0);
+    }
+
+    int StringBasic::LastPositionIf(const StringBasic &other) const {
+        return LastPositionIf(other, Count() - 1);
+    }
+
+    int StringBasic::LastPositionIfNot(const StringBasic &other) const {
+        return LastPositionIfNot(other, Count() - 1);
+    }
+
+    int StringBasic::PositionIf(const StringBasic &other, int start) const {
+        for (int i = start; p[i] != 0 ; ++i) {
+            if (other.Has(p[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    int StringBasic::PositionIfNot(const StringBasic &other, int start) const {
+        for (int i = start; p[i] != 0 ; ++i) {
+            if (!other.Has(p[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    int StringBasic::LastPositionIf(const StringBasic &other, int start) const {
+        for (int i = start; i >= 0 ; --i) {
+            if (other.Has(p[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    int StringBasic::LastPositionIfNot(const StringBasic &other, int start) const {
+        for (int i = start; i >= 0 ; --i) {
+            if (!other.Has(p[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
+    void StringBasic::Trim() {
+        TrimRight();
+        TrimLeft();
+    }
+
+    void StringBasic::TrimLeft() {
+        int x = PositionIfNot(" ");
+        if (x == -1) {
+            Clear();
+        } else {
+            Erase(0, x-1);
+        }
+    }
+
+    void StringBasic::TrimRight() {
+        Head(LastPositionIfNot(" ") + 1);
+    }
+
+
+    bool StringBasic::StartsBy(const StringBasic &other) const {
+        return std::strncmp(this->p, other.p, other.Count()) == 0;
+    }
+
+    bool StringBasic::EndsBy(const StringBasic &other) const {
+        int thisCount = this->Count();
+        int otherCount = other.Count();
+        return otherCount <= thisCount &&
+            std::strcmp(this->p + thisCount - otherCount, other.p) == 0;
+    }
+
+
+    void StringBasic::Reverse() {
+        for (int i = 0, j = Count(); i < j; ++i, --j) {
+            Swap(i, j);
+        }
+    }
+
+    void StringBasic::Swap(int x, int y) {
+        char m = p[x];
+        p[x] = p[y];
+        p[y] = m;
+    }
+
+
+    void StringBasic::SendToBack() {
+        SendToBack(1);
+    }
+
+    void StringBasic::SendToBack(int n) {
+        StringBasic temp(*this, 0, mar::Min(Count(), n) - 1);
+        RemoveFirst(n);
+        Append(temp);
+    }
+
+    void StringBasic::BringToFront() {
+        BringToFront(1);
+    }
+
+    void StringBasic::BringToFront(int n) {
+        SendToBack(mar::Max(0, Count() - n));
+    }
+
+
+    void StringBasic::ToLowerCase() {
+        for (int i = 0; i < Count(); ++i) {
+            p[i] = static_cast<char>(std::tolower(p[i]));
+        }
+    }
+
+    void StringBasic::ToUpperCase() {
+        for (int i = 0; i < Count(); ++i) {
+            p[i] = static_cast<char>(std::toupper(p[i]));
+        }
+    }
+
+
+    int StringBasic::Sum() const {
+        int result = 0;
+        for (int i = 0; p[i] != 0 ; ++i) {
+            result += static_cast<unsigned char>(p[i]);
+        }
+        return result;
+    }
+
+    int StringBasic::ArithmeticHash() const {
+        int result = 0;
+        int i = 0;
+        int count = mar::Min(Count(), 127);
+        while (i<count) {
+            int p = 0;
+            for (int j = 0; j < 3 && i < count ; ++j) {
+                p += 256 * p + static_cast<unsigned char>(At(i++));
+            }
+            result += p;
+        }
+        return result;
+    }
+
+    int StringBasic::Hash() const {
+        // bitwise implementation
+        unsigned result = 0;
+        for (int i = 0; p[i] != 0; i++) {
+            result += static_cast<unsigned>(p[i]);
+            result += result << 10;
+            result ^= result >> 6;
+        }
+        result += result << 3;
+        result ^= result >> 11;
+        result += result << 15;
+        return std::abs(static_cast<int>(result));
+    }
+
+
+    bool StringBasic::IsSorted() const {
+        if (Empty()) {
+            return true;
+        }
+        for (int i = 1; p[i] != 0 ; ++i) {
+            if (static_cast<unsigned char>(p[i-1]) > static_cast<unsigned char>(p[i]) ) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void StringBasic::Sort() {
+        if (!Empty()) {
+            Quicksort(0, Count() - 1);
+        }
+    }
+
+    void StringBasic::Unique() {
+        int i = 0;
+        int j = 0;
+        while (p[i] != 0) {
+            char c = p[i];
+            do {
+                i++;
+            } while (p[i] == c);
+            p[j++] = c;
+        }
+        p[j] = 0;
+    }
+
+
+    void StringBasic::Merge(const StringBasic &other) {
+        StringBasic result(Count() + other.Count() + 1);
+        int i = 0;
+        int j = 0;
+        int k = 0;
+        while (p[i] != 0 && other.p[j] != 0) {
+            if (p[i] <= other.p[j]) {
+                result.p[k++] = p[i++];
+            } else {
+                result.p[k++] = other.p[j++];
+            }
+        }
+        while (p[i] != 0) {
+            result.p[k++] = p[i++];
+        }
+        while (other.p[j] != 0) {
+            result.p[k++] = other.p[j++];
+        }
+        result[k] = 0;
+        SwapOut(result);
+    }
+
+    void StringBasic::Intersect(const StringBasic &other) {
+        StringBasic result(mar::Min(Count(),other.Count()) + 1);
+        int i = 0;
+        int j = 0;
+        int k = 0;
+        while (p[i] != 0 && other.p[j] != 0) {
+            if (p[i] == other.p[j]) {
+                result.p[k++] = p[i];
+                i++, j++;
+            } else if (p[i] < other.p[j]) {
+                i++;
+            } else {
+                j++;
+            }
+        }
+        result[k] = 0;
+        SwapOut(result);
+    }
+
+    void StringBasic::Subtract(const StringBasic &other) {
+        StringBasic result(Count() + 1);
+        int i = 0;
+        int j = 0;
+        int k = 0;
+        while (p[i] != 0 && other.p[j] != 0) {
+            if (p[i] != other.p[j]) {
+                result.p[k++] = p[i];
+            } else {
+                j++;
+            }
+            i++;
+        }
+        while (p[i] != 0) {
+            result.p[k++] = p[i++];
+        }
+        result[k] = 0;
+        SwapOut(result);
+    }
+
+    bool StringBasic::Contains(const StringBasic &other) const {
+        int j = 0;
+        for (int i = 0; p[i] != 0 && other.p[j] != 0 ; ++i) {
+            if (p[i] == other.p[j]) {
+                j++;
+            }
+        }
+        return other.p[j] == 0;
+    }
+
+
     std::ostream &operator<<(std::ostream &output, const StringBasic &s) {
         s.Write(output);
         return output;
@@ -529,6 +834,36 @@ namespace mar {
         }
     }
 
+    char StringBasic::Digit(int x) {
+        return static_cast<char>(x < 10 ? x + '0' : x - 10 + 'A');
+    }
+
+    int StringBasic::DigitValue(char c) {
+        return static_cast<int>(c < '0' + 10 ? c - '0' : c + 10 - 'A');
+    }
+
+    StringBasic StringBasic::Numeral(int n, int base) {
+        StringBasic result(33);
+        if (n < 0) {
+            result.Extend('-');
+        }
+        result.AppendNumeral(std::abs(n), base);
+        return result;
+    }
+
+    StringBasic StringBasic::Fixed(double x, int precision) {
+        std::stringstream sst;
+        sst << std::fixed << std::setprecision(precision) << x;
+        return StringBasic(sst.str());
+    }
+
+    StringBasic StringBasic::Scientific(double x, int precision) {
+        std::stringstream sst;
+        sst << std::scientific << std::setprecision(precision) << x;
+        return StringBasic(sst.str());
+    }
+
+
     // PRIVATE
     void StringBasic::ReadNext(std::istream &input, char delimiter) {
         input.clear();
@@ -547,5 +882,35 @@ namespace mar {
         delete [] q;
     }
 
+    void StringBasic::AppendNumeral(int n, int base) {
+        if (n >= base) {
+            AppendNumeral(n / base, base);
+        }
+        Extend(Digit(n % base));
+    }
+
+    void StringBasic::Quicksort(int lowerBound, int upperBound) {
+        int i = lowerBound;
+        int j = upperBound;
+        char pivot = p[(i+j)/2];
+        do {
+            while(static_cast<unsigned char>(p[i]) < static_cast<unsigned char>(pivot)) {
+                i++;
+            }
+            while(static_cast<unsigned char>(p[j]) > static_cast<unsigned char>(pivot)) {
+                j--;
+            }
+            if (i <= j) {
+                Swap(i++, j--);
+            }
+        } while (i <= j);
+        if (lowerBound < j) {
+            Quicksort(lowerBound, j);
+        }
+        if (i < upperBound) {
+            Quicksort(i, upperBound);
+        }
+
+    }
 
 }

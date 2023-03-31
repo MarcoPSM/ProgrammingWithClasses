@@ -125,6 +125,52 @@ namespace mar {
         virtual const char& Item() const; // pre !Empt();
         virtual char& Item(); // pre !Empt();
 
+        virtual int CountIf(const StringBasic& other) const;
+        virtual int CountIfNot(const StringBasic& other) const;
+
+        virtual void PruneIf(const StringBasic& other);
+        virtual void PruneIfNot(const StringBasic& other);
+
+        virtual int PositionIf(const StringBasic& other) const;
+        virtual int PositionIfNot(const StringBasic& other) const;
+        virtual int LastPositionIf(const StringBasic& other) const;
+        virtual int LastPositionIfNot(const StringBasic& other) const;
+        virtual int PositionIf(const StringBasic& other, int start) const; // ore start>=0;
+        virtual int PositionIfNot(const StringBasic& other, int start) const; // ore start>=0;
+        virtual int LastPositionIf(const StringBasic& other, int start) const; // ore start<Count();
+        virtual int LastPositionIfNot(const StringBasic& other, int start) const; // ore start<Count();
+
+        virtual void Trim();
+        virtual void TrimLeft();
+        virtual void TrimRight();
+
+        virtual bool StartsBy(const StringBasic& other) const;
+        virtual bool EndsBy(const StringBasic& other) const;
+
+        virtual void Reverse();
+        virtual void Swap(int x, int y); // pre ValidIndex(x) && ValidIndex(y);
+
+        virtual void SendToBack();
+        virtual void SendToBack(int n); // pre n >= 0;
+        virtual void BringToFront();
+        virtual void BringToFront(int n); // pre n >= 0;
+
+        virtual void ToLowerCase();
+        virtual void ToUpperCase();
+
+        virtual int Sum() const;
+        virtual int ArithmeticHash() const;
+        virtual int Hash() const;
+
+        virtual bool IsSorted() const;
+        virtual void Sort(); // post IsSorted();
+        virtual void Unique();
+
+        virtual void Merge(const StringBasic& other);
+        virtual void Intersect(const StringBasic& other);
+        virtual void Subtract(const StringBasic& other);
+        virtual bool Contains(const StringBasic& other) const;
+
     public: // friend
         friend std::ostream& operator << (std::ostream& output, const StringBasic& s);
         friend std::istream& operator >> (std::istream&  input, StringBasic& s);
@@ -133,10 +179,18 @@ namespace mar {
         static int i_strlen(const char *s);
         static void i_strcpy(char *s, const char *t);
         static void EraseDuplicateLines(std::istream& input, std::ostream& output);
+        static char Digit(int x); // pre 0 <= x && x < 36;
+        static int DigitValue(char c); // pre '0' <= c && c < '9' || 'A' <= c && c < 'Z';
+        // pseudoconstructors
+        static StringBasic Numeral(int n, int base = 10); // pre 2 <= base && base <= 36;
+        static StringBasic Fixed(double x, int precision = 6);
+        static StringBasic Scientific(double x, int precision = 6);
 
     private:
         virtual void ReadNext(std::istream& input, char delimiter);
         virtual void Reallocate(int newCapacity); // pre newCapacity >= Count() + 1;
+        virtual void AppendNumeral(int n, int base); // pre 2 <= base && base <= 36;
+        virtual void Quicksort(int lowerBound, int upperBound);
     };
 }
 
