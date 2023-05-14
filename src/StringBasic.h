@@ -16,6 +16,12 @@ namespace mar {
         char *p;
     private: // static
         static int defaultCapacity;
+    public: // static constants
+        static const StringBasic uppercaseLetters;
+        static const StringBasic lowercaseLetters;
+        static const StringBasic letters;
+        static const StringBasic digits;
+        static const StringBasic null;
     public:
         StringBasic();
         StringBasic(const StringBasic& other);
@@ -171,6 +177,11 @@ namespace mar {
         virtual void Subtract(const StringBasic& other);
         virtual bool Contains(const StringBasic& other) const;
 
+        virtual void Map(const StringBasic& from, const StringBasic& to); // pre from.Count() <= to.Count();
+        virtual StringBasic Applied(void (StringBasic::*F)()) const;
+
+        virtual int AsInt(int base=10) const; // pre 2 <= base && base <= 36;
+
     public: // friend
         friend std::ostream& operator << (std::ostream& output, const StringBasic& s);
         friend std::istream& operator >> (std::istream&  input, StringBasic& s);
@@ -178,7 +189,6 @@ namespace mar {
     public: // static
         static int i_strlen(const char *s);
         static void i_strcpy(char *s, const char *t);
-        static void EraseDuplicateLines(std::istream& input, std::ostream& output);
         static char Digit(int x); // pre 0 <= x && x < 36;
         static int DigitValue(char c); // pre '0' <= c && c < '9' || 'A' <= c && c < 'Z';
         // pseudoconstructors

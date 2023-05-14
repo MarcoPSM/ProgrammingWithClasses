@@ -3,6 +3,7 @@
 //
 
 #include <ctime>
+#include <limits>
 #include "Date.h"
 #include "UtilityFunctions.h"
 

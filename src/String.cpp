@@ -79,7 +79,7 @@ namespace mar {
                 result += std::string(x - result.size() % x, ' ');
             }
         }
-        result.reserve();
+        result.shrink_to_fit();
         swap(result);
     }
 

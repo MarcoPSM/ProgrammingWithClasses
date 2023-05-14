@@ -11,6 +11,12 @@ namespace mar {
 
     int StringBasic::defaultCapacity = 16;
 
+    const StringBasic StringBasic::uppercaseLetters('A','Z');
+    const StringBasic StringBasic::lowercaseLetters('a','z');
+    const StringBasic StringBasic::letters(uppercaseLetters, lowercaseLetters);
+    const StringBasic StringBasic::digits('0','9');
+    const StringBasic StringBasic::null;
+
     StringBasic::StringBasic():
         capacity(defaultCapacity), p(new char[defaultCapacity]) {
         *p = 0;
@@ -464,7 +470,7 @@ namespace mar {
         Read(std::cin, delimiter);
     }
 
-    void StringBasic::Accept(const StringBasic &prompt) {
+    void StringBasic::Accept(const StringBasic& prompt) {
         prompt.Write();
         Read();
     }
@@ -610,7 +616,7 @@ namespace mar {
 
 
     void StringBasic::Reverse() {
-        for (int i = 0, j = Count(); i < j; ++i, --j) {
+        for (int i = 0, j = Count() - 1; i < j; ++i, --j) {
             Swap(i, j);
         }
     }
@@ -795,6 +801,37 @@ namespace mar {
     }
 
 
+    void StringBasic::Map(const StringBasic &from, const StringBasic &to) {
+        int x;
+        for(int i=0; p[i] != 0; i++) {
+            if( ( x = from.Position(p[i]) ) != -1 ) {
+                p[i] = to[x];
+            }
+        }
+    }
+
+
+    StringBasic StringBasic::Applied(void (StringBasic::*F)()) const {
+        StringBasic temp(*this);
+        (temp.*F)();
+        return temp;
+    }
+
+
+    int StringBasic::AsInt(int base) const {
+        int result;
+        char *endp;
+        errno = 0;
+        result = std::strtol(p, &endp, base);
+        if (errno || *endp) {
+            errno = 0;
+            StringBasic message("\"", *this + "\" is not a legal int value.");
+            throw message;
+        }
+        return result;
+    }
+
+
     std::ostream &operator<<(std::ostream &output, const StringBasic &s) {
         s.Write(output);
         return output;
@@ -808,7 +845,7 @@ namespace mar {
 
     int StringBasic::i_strlen(const char *s) {
         int i = 0;
-        while (s[i != 0]) {
+        while (s[i] != 0) {
             i++;
         }
         return i;
@@ -822,17 +859,6 @@ namespace mar {
         s[i] = 0;
     }
 
-    void StringBasic::EraseDuplicateLines(std::istream &input, std::ostream &output) {
-        StringBasic line;
-        line.Read(input);
-        while (input) {
-            line.WriteLine(output);
-            StringBasic current(line);
-            do {
-                line.Read(input);
-            } while (input && line == current);
-        }
-    }
 
     char StringBasic::Digit(int x) {
         return static_cast<char>(x < 10 ? x + '0' : x - 10 + 'A');

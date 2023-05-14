@@ -14,6 +14,14 @@
 #include "Date.h"
 #include "DateSpecial.h"
 #include "Metrics.h"
+#include "StringBasic.h"
+#include "CaeserCipher.h"
+#include "CipherText.h"
+#include "TranspositionCipher.h"
+#include "VigenereCipher.h"
+#include "StringDecimal.h"
+#include "StringArctan.h"
+
 
 using namespace mar;
 
@@ -26,6 +34,14 @@ void TestFriday13();
 void TestBridges();
 void TestDepartForVacations();
 void TestMetrics();
+void TestApplied();
+void TestConversionToInt();
+void TestCipher();
+void TestNeighbor();
+void TestFindNeighbors();
+void TestOneMultiplication();
+void TestPi();
+
 
 int main() {
     std::cout << "Programação com classes" << std::endl;
@@ -37,11 +53,177 @@ int main() {
     //TestFriday13();
     //TestBridges();
     //TestDepartForVacations();
-    TestMetrics();
+    //TestMetrics();
+    //TestApplied();
+    //TestConversionToInt();
+    //TestCipher();
+    //TestNeighbor();
+    //TestFindNeighbors();
+    //TestOneMultiplication();
+    TestPi();
 
     return 0;
 }
 
+void TestPi() {
+    int x;
+    std::cout << "Precisao: ";
+    std::cin >> x;
+    StringArctan pi(x);
+    pi.Pi();
+    pi.WriteLine();
+}
+
+
+
+void TestOneMultiplication() {
+    StringBasic s;
+    s.Accept("Um numero: ");
+    if (s.Empty()) {
+        s.Put('0');
+    }
+    s.PruneIfNot(StringBasic::digits);
+    if (s.Empty()) {
+        s.Put('0');
+    }
+    StringDecimal x(s);
+
+    s.Accept("Outro numero: ");
+    s.PruneIfNot(StringBasic::digits);
+    if (s.Empty()) {
+        s.Put('0');
+    }
+    StringDecimal y(s);
+
+    std::cout << "x = " << x << std::endl;
+    std::cout << "y = " << y << std::endl;
+    StringDecimal p(x);
+    p.Multiply(y);
+    std::cout << "x * y = " << p << std::endl;
+
+    if (x != 0) {
+        StringDecimal p2(p);
+        StringDecimal r;
+        p2.Divide(x, r);
+        std::cout << "x * y / x = " << p2 << std::endl;
+        std::cout << "Resto= " << r << std::endl;
+    }
+
+    if (y!=0) {
+        StringDecimal r;
+        p.Divide(y, r);
+        std::cout << "x * y / y = " << p << std::endl;
+        std::cout << "Resto= " << r << std::endl;
+    }
+}
+
+
+
+void TestFindNeighbors() {
+    for(;;) {
+        StringSpecial s1(100);
+        s1.Accept("Uma palavra: ");
+        if (s1.Empty()) {
+            break;
+        }
+        std::ifstream input("pt.txt");
+        s1.WriteNeighbors(input, std::cout);
+    }
+}
+
+
+void TestNeighbor() {
+    StringSpecial s1(100);
+    StringSpecial s2(200);
+    for (;;) {
+        s1.Accept("Uma palavra: ");
+        if (s1.Empty()) {
+            break;
+        }
+        s2.Accept("Outra palavr: ");
+        std::cout << (s1.Neighbor(s2) ? "Sim" : "Não") << std::endl;
+    }
+}
+
+
+void TestCipher() {
+    std::ifstream input;
+    std::ofstream output;
+    // o ficheiro claro.txt, para ja, tem de estar na pasta onde o binario é gerado: cmake-build-debug/src/
+    // e os outros ficheiro serao gerados la tambem
+    input.open("claro.txt");
+    output.open("cesar.txt");
+    mar::CaeserCipher c;
+    mar::CipherText ct1(c, "SEGREDO");
+    ct1.EncryptText(input, output);
+    output.close();
+
+    input.clear();
+    input.seekg(0);
+    output.open("transposicao.txt");
+    mar::TranspositionCipher t;
+    mar::CipherText ct2(t, "SEGREDO");
+    ct2.EncryptText(input, output);
+    output.close();
+
+    input.clear();
+    input.seekg(0);
+    output.open("vigenere.txt");
+    mar::VigenereCipher v;
+    mar::CipherText ct3(v, "SEGREDO");
+    ct3.EncryptText(input, output);
+    output.close();
+
+    input.clear();
+    input.close();
+
+    input.open("cesar.txt");
+    ct1.DecryptText(input, std::cout);
+    input.clear();
+    input.close();
+
+    input.open("transposicao.txt");
+    ct2.DecryptText(input, std::cout);
+    input.clear();
+    input.close();
+
+    input.open("vigenere.txt");
+    ct3.DecryptText(input, std::cout);
+    input.clear();
+    input.close();
+
+    std::cout<<"Done"<<std::endl;
+}
+
+
+void TestConversionToInt() {
+    for(;;) {
+        mar::StringBasic s;
+        try {
+            s.Accept("Uma cadeia decimal: ");
+            if (s.Empty()) {
+                break;
+            }
+            int x = s.AsInt();
+            std::cout << x << std::endl;
+        } catch (const mar::StringBasic& e) {
+            std::cout <<"Exception: " << e << std::endl;
+        }
+    }
+}
+
+void TestApplied() {
+    for(;;) {
+        std::cout << "Cadeia: ";
+        mar::StringBasic s;
+        s.Read();
+        std::cout << s << std::endl;
+        if (s.Empty()) {
+            break;
+        }
+        std::cout << "Reverse: " << s.Applied(&mar::StringBasic::Reverse) << std::endl;
+    }
+}
 
 void TestMetrics() {
     std::string fileName;

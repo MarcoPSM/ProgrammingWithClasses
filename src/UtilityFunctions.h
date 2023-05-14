@@ -44,5 +44,7 @@ namespace mar {
     }
 
     void SkipLine(std::istream& input = std::cin, char delimiter = '\n');
+
+    int CountDigits(int x, int base=10);
 }
 #endif //PROGRAMACAOCOMCLASSES_UTILITYFUNCTIONS_H
