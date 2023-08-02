@@ -43,6 +43,11 @@ namespace mar {
         return x<=y && y<=z;
     }
 
+    template <class T>
+    T Square(const T &x) {
+        return x* x;
+    }
+
     void SkipLine(std::istream& input = std::cin, char delimiter = '\n');
 
     int CountDigits(int x, int base=10);

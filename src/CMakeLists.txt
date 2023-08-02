@@ -6,7 +6,9 @@ set(SOURCE ${SOURCES})
 
 add_executable(${BINARY}_run ${SOURCES})
 
-add_library(${BINARY}_lib STATIC ${SOURCES} Cipher.cpp Cipher.h StringCipher.cpp StringCipher.h CaeserCipher.cpp CaeserCipher.h TranspositionCipher.cpp TranspositionCipher.h VigenereCipher.cpp VigenereCipher.h CipherText.cpp CipherText.h StringDecimal.cpp StringDecimal.h StringArctan.cpp StringArctan.h)
+add_library(${BINARY}_lib STATIC ${SOURCES})
+
+include_directories(models)
 
 
 #add_test(NAME ${BINARY} COMMAND ${BINARY})

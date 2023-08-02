@@ -45,11 +45,11 @@ void TestPi();
 
 int main() {
     std::cout << "Programação com classes" << std::endl;
-    //TestPoint();
+    //TestPoint();2
     //TestWriteRead();
     //TestTriangle();
     //TestStringOperations();
-    //TestDate();
+    TestDate();
     //TestFriday13();
     //TestBridges();
     //TestDepartForVacations();
