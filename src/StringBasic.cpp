@@ -3,6 +3,7 @@
 //
 
 #include <cstring>
+#include <sstream>
 #include <iomanip>
 #include "StringBasic.h"
 #include "UtilityFunctions.h"
