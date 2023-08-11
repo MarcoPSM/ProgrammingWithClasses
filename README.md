@@ -2,17 +2,29 @@
 
 * Practice object-oriented programming with C++
 
-### Requirements
+## Requirements
+
 * Requires googletest library
-    * Create a folder lib
-    * Checkout de googletest into that folder
+  * cd lib/
+  * wget <https://github.com/google/googletest/archive/refs/tags/v1.13.0.zip>
+  * unzip v1.13.0.zip
+  * mv googletest-1.13.0 googletest
 
-### Acknowledgements
+## Acknowledgements
+
 * Project based on this book:
-    * Programação com Classes em C++ 3ªed FCA 
+  * Programação com Classes em C++ 3ªed FCA
 
+## Compile & Run
 
-### Compile & Run
-* cmake .
+* mkdir build && cd build
+* cmake ..
 * make
-* ./executable_file
+* ./src/ProgramacaoComClasses_run
+
+For clang
+
+* mkdir build && cd build
+* cmake -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang ../
+* make
+* ./src/ProgramacaoComClasses_run
