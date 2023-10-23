@@ -29,3 +29,9 @@ For clang
 * cmake -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang ../
 * make
 * ./src/ProgramacaoComClasses_run
+
+## Problems & solutions
+
+* to see if everythin it's ok with the required libraries:
+  * ldd ./src/ProgramacaoComClasses_run
+  * If a lib is missing, the path to it must be added to the LD_LIBRARY_PATH variable in the .bashrc file.
