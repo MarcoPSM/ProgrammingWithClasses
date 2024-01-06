@@ -2,12 +2,6 @@
 
 * Practice object-oriented programming with C++
 
-## Book
-
-Programação com Classes em C++\
-3ª Edição\
-Pedro Gerreiro
-
 ## Requirements
 
 * Requires googletest library
@@ -19,7 +13,7 @@ Pedro Gerreiro
 ## Acknowledgements
 
 * Project based on this book:
-  * Programação com Classes em C++ 3ªed FCA
+  * Programação com Classes em C++, Pedro Gerreiro, 3ªed FCA
 
 ## Compile & Run
 
