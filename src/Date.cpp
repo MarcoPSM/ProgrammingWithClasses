@@ -47,7 +47,7 @@ namespace mar {
         Set(year, week, weekday);
     }
 
-    Date::~Date() noexcept {
+    Date::~Date() {
 
     }
 
@@ -293,6 +293,11 @@ namespace mar {
     std::ostream& operator << (std::ostream& output, const Date& d) {
         d.Write(output);
         return output;
+    }
+
+    void Date::Read(std::istream &input) {
+        // TODO Implement this function.
+	// It's used in FootballPlayer::Read (pag.393)
     }
 
     void Date::AddWeek(int x) {

@@ -80,6 +80,8 @@ namespace mar {
 
         friend std::ostream& operator << (std::ostream& output, const Date& d);
 
+        virtual void Read(std::istream& input = std::cin);
+
         virtual void AddWeek(int x = 1);
         virtual void SubtractWeek(int x = 1); // pre Count() >= 7*x;
         virtual void ReachForward(WeekdayType weekday);
