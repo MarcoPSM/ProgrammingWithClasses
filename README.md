@@ -2,6 +2,12 @@
 
 * Practice object-oriented programming with C++
 
+## Book
+
+Programação com Classes em C++\
+3ª Edição\
+Pedro Gerreiro
+
 ## Requirements
 
 * Requires googletest library
