@@ -2,12 +2,11 @@
 // Created by Marco Martins on 04-06-2023.
 //
 
-
-#include "gtest/gtest.h"
-#include "ThermometerSimple.h"
+#include "Thermograph.h"
 #include "ThermometerExtreme.h"
 #include "ThermometerMulti.h"
-#include "Thermograph.h"
+#include "ThermometerSimple.h"
+#include "gtest/gtest.h"
 
 TEST(ThermometerTestSuite, thermometer) {
     mar::ThermometerSimple t;
@@ -53,12 +52,13 @@ TEST(ThermometerTestSuite, thermometerMulti) {
     t.WarmUp();
     std::cout << "Display: ";
     t.Display();
+    std::cout << std::endl;
     t.ChangeOutputStation();
     t.ChangeOutputStation();
-    std::cout << " Display: ";
+    std::cout << "Display: ";
     t.Display();
-    EXPECT_EQ(3,t.Count());
-
+    std::cout << std::endl;
+    EXPECT_EQ(3, t.Count());
 }
 
 TEST(ThermometerTestSuite, thermograph) {
@@ -70,11 +70,12 @@ TEST(ThermometerTestSuite, thermograph) {
     t.WarmUp();
     t.Take();
     std::cout << "Display: ";
-    //t.Display();
-    //t.Plot(std::cout);
-    EXPECT_EQ(3,t.Count());
-    EXPECT_EQ(20.2,t.Average());
+    std::cout << std::endl;
+    // t.Display();
+    // t.Plot(std::cout);
+    EXPECT_EQ(3, t.Count());
+    EXPECT_EQ(20.2, t.Average());
     double tolerance = 0.000001;
-    EXPECT_NEAR(0.2,t.Extent(), tolerance);
-    EXPECT_EQ(3,t.Count());
+    EXPECT_NEAR(0.2, t.Extent(), tolerance);
+    EXPECT_EQ(3, t.Count());
 }
