@@ -17,10 +17,12 @@
 
 ## Compile & Run
 
+* rm -rf build
 * mkdir build && cd build
 * cmake ..
 * make
 * ./src/ProgramacaoComClasses_run
+* ./tests/ProgramacaoComClasses_test
 
 For clang
 
@@ -29,6 +31,7 @@ For clang
 * cmake -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang ../
 * make
 * ./src/ProgramacaoComClasses_run
+* ./tests/ProgramacaoComClasses_test
 
 ## Problems & solutions
 
