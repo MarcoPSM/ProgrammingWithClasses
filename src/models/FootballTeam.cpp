@@ -45,10 +45,10 @@ FootballPlayer &FootballTeam::PlayerOf(int number) {
         if (i->Number() == number) {
             return *i;
         }
-        // throw StringBasic("No player with shirt number " +
-        //                   StringBasic::Numeral(number) + ".");
-        throw StringBasic("No player with shirt number ");
     }
+    // throw StringBasic("No player with shirt number " +
+    //                   StringBasic::Numeral(number) + ".");
+    throw StringBasic("No player with shirt number ");
 }
 
 const FootballPlayer &FootballTeam::PlayerOf(int number) const {
@@ -79,13 +79,19 @@ void FootballTeam::Write(std::ostream &output) const {
 }
 
 void FootballTeam::Read(std::istream &input) {
+    // This function still has some problem, so I set 30 as the player limit.
+    int max = 30;
     int n;
     input >> n;
     SkipLine(input);
-    std::cout << n << std::endl;
+    std::cout << "Total: " << n << std::endl;
     players.reserve(n);
+    int count = 0;
     for (int i = 0; i < n; i++) {
-        std::cout << i << std::endl;
+        if (max == count++) {
+            break;
+        }
+        std::cout << "Player: " << i << std::endl;
         FootballPlayer f;
         f.Read(input);
         players.push_back(f);
