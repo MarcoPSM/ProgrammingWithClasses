@@ -23,7 +23,8 @@ TEST(VocabularyTestSuite, vocabulary) {
     mar::Vocabulary voc(28000, input);
     for (;;) {
         mar::StringBasic s(256);
-        s.Accept("Uma palavra: ");
+        s.Accept("Uma palavra para procurar no ficheiro PT.txt (Ex: Ana) - "
+                 "para sair '!': ");
         if (!s.Empty() && s[0] == '!') {
             break;
         }
