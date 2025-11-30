@@ -6,9 +6,11 @@
 #define PROGRAMACAOCOMCLASSES_FOOTBALLTEAM_H
 
 #include "FootballPlayer.h"
-#include "StringBasic.h"
-#include "UtilityFunctions.h"
+#include "../StringBasic.h"
+#include "../UtilityFunctions.h"
 #include <algorithm>
+#include <iostream>
+#include <vector>
 
 namespace mar {
 

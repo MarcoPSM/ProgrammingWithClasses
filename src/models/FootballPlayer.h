@@ -5,9 +5,9 @@
 #ifndef PROGRAMACAOCOMCLASSES_FOOTBALLPLAYER_H
 #define PROGRAMACAOCOMCLASSES_FOOTBALLPLAYER_H
 
-#include "Date.h"
-#include "StringBasic.h"
-#include "UtilityFunctions.h"
+#include "../Date.h"
+#include "../StringBasic.h"
+#include "../UtilityFunctions.h"
 
 namespace mar {
 

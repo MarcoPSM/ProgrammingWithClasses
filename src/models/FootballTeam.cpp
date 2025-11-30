@@ -17,7 +17,7 @@ void FootballTeam::Selection::AddPlayers(
     FootballPlayer::PositionType position, int n) {
     int count = 0;
     for (std::vector<FootballPlayer>::const_iterator i = players.begin();
-         i != players.end(); i++) {
+         i != players.end() && count < n; i++) {
         if (!i->Injured() && i->Position() == position) {
             push_back(i);
             count++;

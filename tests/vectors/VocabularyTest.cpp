@@ -2,8 +2,8 @@
 // Created by Marco Martins on 04-06-2023.
 //
 
-#include "Vocabulary.h"
-#include "StringBasic.h"
+#include "../../src/vectors/Vocabulary.h"
+// #include "../../src/StringBasic.h"
 #include "gtest/gtest.h"
 #include <fstream>
 
@@ -21,6 +21,8 @@ TEST(VocabularyTestSuite, vocabulary) {
 
     std::ifstream   input("Pt.txt");
     mar::Vocabulary voc(28000, input);
+
+    /*
     for (;;) {
         mar::StringBasic s(256);
         s.Accept("Uma palavra para procurar no ficheiro PT.txt (Ex: Ana) - "
@@ -34,4 +36,7 @@ TEST(VocabularyTestSuite, vocabulary) {
         voc.Show(10);
     }
     EXPECT_NE(1, 2);
+    */
+    voc.Search("Ana");
+    EXPECT_EQ("Ana", *voc.begin());
 }

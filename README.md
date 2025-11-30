@@ -23,6 +23,7 @@
 * make
 * ./src/ProgramacaoComClasses_run
 * ./tests/ProgramacaoComClasses_test
+* ./tests/ProgramacaoComClasses_test --gtest_filter=FootballPlayerTestSuite.team
 
 For clang
 
@@ -32,6 +33,7 @@ For clang
 * make
 * ./src/ProgramacaoComClasses_run
 * ./tests/ProgramacaoComClasses_test
+* ./tests/ProgramacaoComClasses_test --gtest_filter=FootballPlayerTestSuite.team
 
 ## Problems & solutions
 

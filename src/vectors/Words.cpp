@@ -3,13 +3,14 @@
 //
 
 #include "Words.h"
+#include <algorithm>
 
 namespace mar {
 Words::Words(int capacity, std::istream &input) : std::vector<StringBasic>() {
     reserve(capacity);
     Read(input);
     std::sort(begin(), end());
-    std::unique(begin(), end());
+    erase(std::unique(begin(), end()), end());
 }
 Words::~Words() {}
 

@@ -5,7 +5,7 @@
 #ifndef PROGRAMACAOCOMCLASSES_WORDS_H
 #define PROGRAMACAOCOMCLASSES_WORDS_H
 
-#include "StringBasic.h"
+#include "../StringBasic.h"
 #include <vector>
 
 namespace mar {

@@ -3,6 +3,7 @@
 //
 
 #include "VocabularyBidirectional.h"
+#include <algorithm>
 
 namespace mar {
 VocabularyBidirectional::VocabularyBidirectional(int           capacity,
